@@ -96,7 +96,7 @@
 
   <div class="additional-buttons2">
     <!-- Anatomy button and its collapsible text -->
-    <button id="anatomymButton" onclick="fetchAndToggleContent('anatomym.html', 'anatomymText')">ANATOMY</button>
+    <button id="anatomymButton" onclick="fetchAndToggleContent('anatomym.html', 'anatomymText', true)">ANATOMY</button>
     <div class="collapsible-text" id="anatomymText">
       <!-- Anatomy content will be dynamically inserted here -->
     </div>
@@ -143,16 +143,30 @@
     }
 
     // JavaScript function to fetch and display content dynamically and toggle the collapsible text
-    function fetchAndToggleContent(filename, textId) {
-      fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/main/plugins/' + filename)
-        .then(response => response.text())
-        .then(data => {
-          var contentContainer = document.getElementById(textId);
-          contentContainer.innerHTML = data;
-          contentContainer.style.display = (contentContainer.style.display === 'block') ? 'none' : 'block';
-        })
-        .catch(error => console.error('Error fetching content:', error));
+    function fetchAndToggleContent(filename, textId, showHeadings) {
+      var contentContainer = document.getElementById(textId);
+
+    fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/main/plugins/' + filename)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+    .then(data => {
+      contentContainer.innerHTML = data;
+
+      // Toggle the display of headings based on the showHeadings parameter
+      var headings = contentContainer.querySelectorAll('h2');
+      headings.forEach(heading => {
+        heading.style.display = showHeadings ? 'block' : 'none';
+      });
+
+      contentContainer.style.display = (contentContainer.style.display === 'block') ? 'none' : 'block';
+    })
+    .catch(error => console.error('Error fetching content:', error));
     }
+
 
     // JavaScript function to toggle the collapsible text
     function toggleCollapsibleText(textId) {
