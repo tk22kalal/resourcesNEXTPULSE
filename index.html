@@ -1,195 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Button Example</title>
-  <style>
-    /* Add some basic styling to the buttons */
-    button {
-      display: block;
-      width: 100%;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      margin-bottom: 10px;
-    }    
-    body {
-      margin: 20px; /* You can adjust the value to set the desired margin size */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Example</title>
+    <style>
+        /* Add some basic styling to the buttons */
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
 
-    /* Hide the additional buttons and collapsible text by default */
-    .additional-buttons1,
-    .additional-buttons2 {
-      display: none;
-      margin-top: 20px;
-    }
+        body {
+            margin: 20px; /* You can adjust the value to set the desired margin size */
+        }
 
-    .main-buttons {
-      margin-top: 20px;
-    }
+        /* Hide the additional buttons and collapsible text by default */
+        .additional-buttons1,
+        .additional-buttons2 {
+            display: none;
+            margin-top: 20px;
+        }
 
-    .collapsible-text {
-      display: none;
-    }
-    .anatomy-section h2 {
-      display: none;
-    }
+        .main-buttons {
+            margin-top: 20px;
+        }
 
-    /* Style for the back button */
-    .back-button {
-      background-color: #2196F3;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px;
-      background-color: #add8e6; /* Light blue background color */
-    }    
-    
-    footer {
-      text-align: center;
-      padding: 10px;
-    }
-    
-  </style>
+        .collapsible-text {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .anatomy-section h2 {
+            display: none;
+            margin-bottom: 5px;
+        }
+
+        /* Style for the back button */
+        .back-button {
+            background-color: #2196F3;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #add8e6; /* Light blue background color */
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
 </head>
+
 <body>
-  
-  <header>
+
+    <header>
+        <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
+    </header>
+
+    <div class="main-buttons">
+        <!-- The main button - PREPLADDER -->
+        <button id="prepladderButton" onclick="showPrepladderButtons()">PREPLADDER</button>
+
+        <!-- The main button - MARROW -->
+        <button id="marrowButton" onclick="showMarrowButtons()">MARROW</button>
     </div>
-    <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
+
+    <div class="additional-buttons1">
+        <!-- Anatomy button and its collapsible text -->
+        <button id="anatomyButton" onclick="fetchAndToggleContent('anatomym.html', 'anatomyText', 'anatomy-section')">ANATOMY</button>
+        <div class="collapsible-text" id="anatomyText">
+            <div class="anatomy-section">
+                <!-- Anatomy content will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- Back to Main Menu button -->
+        <button class="back-button" onclick="backToMainMenu('additional-buttons1')">BACK TO MAIN MENU</button>
     </div>
-  </header>
 
-  <div class="main-buttons">
-    <!-- The main button - PREPLADDER -->
-    <button id="prepladderButton" onclick="showPrepladderButtons()">PREPLADDER</button>
+    <div class="additional-buttons2">
+        <!-- Biochemistry button and its collapsible text -->
+        <button id="biochemistryButton" onclick="fetchAndToggleContent('biochemistryp.html', 'biochemistryText')">BIOCHEMISTRY</button>
+        <div class="collapsible-text" id="biochemistryText">
+            <!-- Biochemistry content will be dynamically inserted here -->
+        </div>
 
-    <!-- The main button - MARROW -->
-    <button id="marrowButton" onclick="showMarrowButtons()">MARROW</button>
-  </div>
-
-  <div class="additional-buttons2">
-    <!-- Anatomy button and its collapsible text -->
-    <button id="anatomymButton" onclick="fetchAndToggleContent('anatomym.html', 'anatomymText', 'anatomy-heading')">ANATOMY</button>
-    <div class="collapsible-text" id="anatomymText">
-      <div class="anatomy-section">
-        <!-- Anatomy content will be dynamically inserted here -->
-      </div>
+        <!-- Back to Main Menu button -->
+        <button class="back-button" onclick="backToMainMenu('additional-buttons2')">BACK TO MAIN MENU</button>
     </div>
-      
-    
-    <!-- Biochemestry button and its collapsible text -->
-    <button id="biochemestryButton" onclick="fetchAndToggleContent('biochemestryp.html', 'biochemestryText')">BIOCHEMESTRY</button>
-    <div class="collapsible-text" id="biochemestryText">
-      <!-- Biochemestry content will be dynamically inserted here -->
-    </div>
-    
 
-    <!-- Back to Main Menu button -->
-    <button class="back-button" onclick="backToMainMenu('additional-buttons1')">BACK TO MAIN MENU</button>
-  </div>
+    <footer>
+        Copyright © 2024 NEXTPULSE. All Rights Reserved.
+    </footer>
 
-  <div class="additional-buttons2">
-    <!-- Anatomy button and its collapsible text -->
-    <button id="anatomymButton" onclick="fetchAndToggleContent('anatomym.html', 'anatomymText', true)">ANATOMY</button>
-    <div class="collapsible-text" id="anatomymText">
-      <!-- Anatomy content will be dynamically inserted here -->
-    </div>
-      
-    
-    <!-- Biochemestry button and its collapsible text -->
-    <button id="biochemestrymButton" onclick="fetchAndToggleContent('biochemestrym.html', 'biochemestrymText')">BIOCHEMESTRY</button>
-    <div class="collapsible-text" id="biochemestrymText">
-      <!-- Biochemestry content will be dynamically inserted here -->
-    </div>
-    
+    <script>
+        // JavaScript function to show the additional buttons for PREPLADDER
+        function showPrepladderButtons() {
+            var prepladderButton = document.getElementById('prepladderButton');
+            prepladderButton.style.display = 'none';
 
-    <!-- Back to Main Menu button -->
-    <button class="back-button" onclick="backToMainMenu('additional-buttons2')">BACK TO MAIN MENU</button>
-  </div>
-  
-  <footer>
-    Copyright © 2024 NEXTPULSE. All Rights Reserved.
-  </footer>
+            var marrowButton = document.getElementById('marrowButton');
+            marrowButton.style.display = 'none';
 
-  <script>
-    // JavaScript function to show the additional buttons for PREPLADDER
-    function showPrepladderButtons() {
-      var prepladderButton = document.getElementById('prepladderButton');
-      prepladderButton.style.display = 'none';
+            var prepladderButtonsContainer = document.querySelector('.additional-buttons1');
+            prepladderButtonsContainer.style.display = 'block';
+        }
 
-      var marrowButton = document.getElementById('marrowButton');
-      marrowButton.style.display = 'none';
+        // JavaScript function to show the additional buttons for MARROW
+        function showMarrowButtons() {
+            var marrowButton = document.getElementById('marrowButton');
+            marrowButton.style.display = 'none';
 
-      var prepladderButtonsContainer = document.querySelector('.additional-buttons1');
-      prepladderButtonsContainer.style.display = 'block';
-    }
+            var prepladderButton = document.getElementById('prepladderButton');
+            prepladderButton.style.display = 'none';
 
-    // JavaScript function to show the additional buttons for MARROW
-    function showMarrowButtons() {
-      var marrowButton = document.getElementById('marrowButton');
-      marrowButton.style.display = 'none';
+            var marrowButtonsContainer = document.querySelector('.additional-buttons2');
+            marrowButtonsContainer.style.display = 'block';
+        }
 
-      var prepladderButton = document.getElementById('prepladderButton');
-      prepladderButton.style.display = 'none';
+        function fetchAndToggleContent(filename, textId, headingClass) {
+            var contentContainer = document.getElementById(textId);
 
-      var marrowButtonsContainer = document.querySelector('.additional-buttons2');
-      marrowButtonsContainer.style.display = 'block';
-    }
+            fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/' + filename)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    contentContainer.innerHTML = data;
 
-    function fetchAndToggleContent(filename, textId, headingClass) {
-      var contentContainer = document.getElementById(textId);
+                    // Toggle the display of headings based on the headingClass parameter
+                    var headings = contentContainer.querySelectorAll('.' + headingClass + ' h2');
+                    headings.forEach(heading => {
+                        heading.style.display = 'block';
+                    });
 
-      fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/' + filename)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.text();
-        })
-        .then(data => {
-          contentContainer.innerHTML = data;
+                    contentContainer.style.display = (contentContainer.style.display === 'block') ? 'none' : 'block';
+                })
+                .catch(error => console.error('Error fetching content:', error));
+        }
 
-          // Toggle the display of headings based on the headingClass parameter
-          var headings = contentContainer.querySelectorAll('.' + headingClass + ' h2');
-          headings.forEach(heading => {
-            heading.style.display = 'block';
-          });
+        // JavaScript function to go back to the main menu
+        function backToMainMenu(containerClass) {
+            var prepladderButton = document.getElementById('prepladderButton');
+            prepladderButton.style.display = 'block';
 
-          contentContainer.style.display = (contentContainer.style.display === 'block') ? 'none' : 'block';
-        })
-        .catch(error => console.error('Error fetching content:', error));
-    }
-    
+            var additionalButtonsContainer = document.querySelector('.' + containerClass);
+            additionalButtonsContainer.style.display = 'none';
 
-    // JavaScript function to toggle the collapsible text
-    function toggleCollapsibleText(textId) {
-      var collapsibleText = document.getElementById(textId);
-
-      // Toggle the display of the collapsible text
-      collapsibleText.style.display = (collapsibleText.style.display === 'block') ? 'none' : 'block';
-    }
-
-    // JavaScript function to go back to the main menu
-    function backToMainMenu(containerClass) {
-      var prepladderButton = document.getElementById('prepladderButton');
-      prepladderButton.style.display = 'block';
-
-      var additionalButtonsContainer = document.querySelector('.' + containerClass);
-      additionalButtonsContainer.style.display = 'none';
-
-      var marrowButton = document.getElementById('marrowButton');
-      marrowButton.style.display = 'block';
-    }
-  </script>
+            var marrowButton = document.getElementById('marrowButton');
+            marrowButton.style.display = 'block';
+        }
+    </script>
 
 </body>
-</html>
 
+</html>
