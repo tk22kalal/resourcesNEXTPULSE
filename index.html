@@ -36,8 +36,8 @@
     .collapsible-text {
       display: none;
     }
-    .anatomy-section {
-      margin-top: 20px;
+    .anatomy-section h2 {
+      display: none;
     }
 
     /* Style for the back button */
@@ -77,9 +77,11 @@
 
   <div class="additional-buttons1">
     <!-- Anatomy button and its collapsible text -->
-    <button id="anatomyButton" onclick="fetchAndToggleContent('anatomyp.html', 'anatomyText')">ANATOMY</button>
+    <button id="anatomyButton" onclick="fetchAndToggleContent('anatomyp.html', 'anatomyText', 'anatomy-section')">ANATOMY</button>
     <div class="collapsible-text" id="anatomyText">
-      <!-- Anatomy content will be dynamically inserted here -->
+      <div class="anatomy-section">
+        <!-- Anatomy content will be dynamically inserted here -->
+      </div>
     </div>
       
     
@@ -142,31 +144,30 @@
       marrowButtonsContainer.style.display = 'block';
     }
 
-    // JavaScript function to fetch and display content dynamically and toggle the collapsible text
-    function fetchAndToggleContent(filename, textId, showHeadings) {
+    function fetchAndToggleContent(filename, textId, headingClass) {
       var contentContainer = document.getElementById(textId);
 
-    fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/main/plugins/' + filename)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.text();
-      })
-    .then(data => {
-      contentContainer.innerHTML = data;
+      fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/main/plugins/' + filename)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.text();
+        })
+        .then(data => {
+          contentContainer.innerHTML = data;
 
-      // Toggle the display of headings based on the showHeadings parameter
-      var headings = contentContainer.querySelectorAll('h2');
-      headings.forEach(heading => {
-        heading.style.display = showHeadings ? 'block' : 'none';
-      });
+          // Toggle the display of headings based on the headingClass parameter
+          var headings = contentContainer.querySelectorAll('.' + headingClass + ' h2');
+          headings.forEach(heading => {
+            heading.style.display = 'block';
+          });
 
-      contentContainer.style.display = (contentContainer.style.display === 'block') ? 'none' : 'block';
-    })
-    .catch(error => console.error('Error fetching content:', error));
+          contentContainer.style.display = (contentContainer.style.display === 'block') ? 'none' : 'block';
+        })
+        .catch(error => console.error('Error fetching content:', error));
     }
-
+    
 
     // JavaScript function to toggle the collapsible text
     function toggleCollapsibleText(textId) {
