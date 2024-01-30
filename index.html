@@ -104,7 +104,7 @@
 
     // JavaScript function to fetch and display content dynamically and toggle the collapsible text
     function fetchAndToggleContent(filename, textId) {
-      fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/main/plugins' + filename)
+      fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/plugins' + filename)
         .then(response => response.text())
         .then(data => {
           var contentContainer = document.getElementById(textId);
