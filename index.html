@@ -286,6 +286,13 @@
     <button class="back-button" onclick="backToMainMenu('additional-buttons1')">BACK TO MAIN MENU</button>
   </div>
       
+    <div class="additional-buttons2">
+    <!-- Anatomy button and its collapsible text -->
+    <button id="anatomymButton" onclick="fetchAndToggleContent('anatomym.html', 'anatomymText')">ANATOMY</button>
+    <div class="collapsible-text" id="anatomymText">
+      <!-- Anatomy content will be dynamically inserted here -->
+    </div>
+      
     
     <!-- Biochemestry button and its collapsible text -->
     <button id="biochemestrymButton" onclick="fetchAndToggleContent('biochemestrym.html', 'biochemestrymText')">BIOCHEMESTRY</button>
@@ -399,7 +406,7 @@
     <!-- Back to Main Menu button -->
     <button class="back-button" onclick="backToMainMenu('additional-buttons2')">BACK TO MAIN MENU</button>
   </div>
-
+    
     <footer>
         Copyright © 2024 NEXTPULSE. All Rights Reserved.
     </footer>
