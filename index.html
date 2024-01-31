@@ -138,10 +138,25 @@
 </head>
 
 <body>
+<body>
 
-    <header>
+   <header>
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
     </header>
+
+  <!-- The main button - PREPLADDER -->
+  <button id="prepladderButton" onclick="showPrepladderButtons()">PREPLADDER</button>
+
+  <!-- The main button - MARROW -->
+  <button id="marrowButton" onclick="showMarrowButtons()">MARROW</button>
+
+  <div class="additional-buttons1">
+    <!-- Anatomy button and its collapsible text -->
+    <button id="anatomyButton" onclick="fetchAndToggleContent('anatomyp.html', 'anatomyText')">ANATOMY</button>
+    <div class="collapsible-text" id="anatomyText">
+      <!-- Anatomy content will be dynamically inserted here -->
+    </div>
+    
 
     
     <div class="main-buttons">
