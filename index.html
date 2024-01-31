@@ -112,8 +112,10 @@
         .search-box {
             width: 600px;
             background: #fff;
-            margin: 20px auto 0;
+            margin: 20px auto;
             border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .row {
@@ -131,7 +133,20 @@
             font-size: 18px;
             color: #333;
         }
-        
+
+        button {
+            background: #1E90FF;
+            border: 0;
+            outline: 0;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        button .fa-search {
+            color: #fff;
+            font-size: 22px;
+        }
+
         ::placeholder {
             color: #555;
         }
@@ -156,6 +171,7 @@
             max-height: 300px;
             overflow-y: scroll;
         }
+        <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
     </style>
 </head>
 
