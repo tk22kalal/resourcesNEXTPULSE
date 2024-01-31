@@ -7,7 +7,7 @@
     <title>Button Example</title>
     <style>
         /* Add some basic styling to the buttons */
-        button {
+        .button {
             display: block;
             font-family: "Roboto", sans-serif;
             font-weight: bold;
@@ -24,12 +24,15 @@
             background-color: #1E90FF;
             color: white;
             margin-bottom: 10px;
+            -webkit-transition-property: box-shadow, transform;
+            transition-property: box-shadow, transform;            
         }
 
         .button:hover, .button:focus; .button:active {
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             -webkit-transform: scale(1.1);
             transform: scale(1.1);
+        }
 
         body {
             margin: 20px; /* You can adjust the value to set the desired margin size */
