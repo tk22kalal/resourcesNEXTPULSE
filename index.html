@@ -142,9 +142,11 @@
             cursor: pointer;
         }
 
-        button .fa-search {
+        button .fa-solid {
+            width: 25px;
             color: #fff;
             font-size: 22px;
+            curser: pointer;
         }
 
         ::placeholder {
@@ -171,8 +173,8 @@
             max-height: 300px;
             overflow-y: scroll;
         }
-        <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
     </style>
+    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -180,7 +182,7 @@
     <div class="search-box">
         <div class="row">
             <input type="text" id="input-box" placeholder="Search anything" autocomplete="off">
-            <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+            <button onclick="performSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         <div class="result-box"></div>
     </div>
