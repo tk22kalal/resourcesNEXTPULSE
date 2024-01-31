@@ -112,7 +112,7 @@
 
 <body>
 
-    <input type="text" name="" id="myInput" placeholder="names.." onkeyup="searchFun()">
+    
 
     <header>
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
@@ -130,7 +130,9 @@
     <!-- Anatomy button and its collapsible text -->
     <button id="anatomyButton" onclick="fetchAndToggleContent('anatomyp.html', 'anatomyText', 'anatomy-section')">ANATOMY</button>
     <div class="collapsible-text" id="anatomyText">
+        <input type="text" name="" id="myInput" placeholder="names.." onkeyup="searchFun()">
     </div>
+
 
     <!-- Anatomy button and its collapsible text -->
     <button id="biochemestryButton" onclick="fetchAndToggleContent('biochemestryp.html', 'biochemestryText')">BIOCHEMESTRY</button>
