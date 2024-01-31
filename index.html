@@ -216,8 +216,9 @@
             var marrowButton = document.getElementById('marrowButton');
             marrowButton.style.display = 'block';
         }
+        // Updated searchFun to use input-box for filtering
         const searchFun = () => {
-            let filter = document.getElementById('myInput').value.toUpperCase();
+            let filter = document.getElementById('input-box').value.toUpperCase();
             let contentTable = document.querySelector('.content-table');
             let rows = contentTable.querySelectorAll('tbody tr');
 
@@ -225,8 +226,8 @@
                 let cells = row.getElementsByTagName('td');
 
                 let rowMatches = Array.from(cells).some(cell => {
-                   let textValue = cell.textContent || cell.innerHTML;
-                   return textValue.toUpperCase().includes(filter);
+                    let textValue = cell.textContent || cell.innerHTML;
+                    return textValue.toUpperCase().includes(filter);
                 });
 
                 if (rowMatches) {
@@ -236,7 +237,7 @@
                 }
             });
         };
-
+    
         
     </script>
 
