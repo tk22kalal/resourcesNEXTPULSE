@@ -1,6 +1,6 @@
+            
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,67 +36,6 @@
 
         body {
             margin: 20px; /* You can adjust the value to set the desired margin size */
-        }
-
-        .search-box {
-            width: 600px;
-            background: #fff;
-            margin: 200px auto 0;
-            border-radius: 5px;
-        }
-
-        .row {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-        }
-
-        input {
-            flex: 1;
-            height: 50px;
-            background: transparent;
-            border: 0;
-            outline: 0;
-            font-size: 18px;
-            color: #333;
-        }
-
-        button {
-            background: transparent;
-            border: 0;
-            outline: 0;
-        }
-
-        button .fa-solid {
-            width: 25px;
-            color: #555;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        ::placeholder {
-            color: #555;
-        }
-
-        .result-box ul {
-            border-top: 1px solid #999;
-            padding: 15px 10px;
-        }
-
-        .result-box ul li {
-            list-style: none;
-            border-radius: 3px;
-            padding: 15px 10px;
-            cursor: pointer;
-        }
-
-        .result-box ul li:hover {
-            background: #e9f3ff;
-        }
-
-        .result-box {
-            max-height: 300px;
-            overflow-y: scroll;
         }
             
         /* Hide the additional buttons and collapsible text by default */
@@ -168,10 +107,76 @@
             font-weight: bold;
             color: #009879;
         }
+
+        /* Style for the search bar */
+        .search-box {
+            width: 600px;
+            background: #fff;
+            margin: 20px auto 0;
+            border-radius: 5px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        input {
+            flex: 1;
+            height: 50px;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        button {
+            background: transparent;
+            border: 0;
+            outline: 0;
+        }
+
+        button .fa-search {
+            width: 25px;
+            color: #555;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        ::placeholder {
+            color: #555;
+        }
+
+        .result-box ul {
+            border-top: 1px solid #999;
+            padding: 15px 10px;
+        }
+
+        .result-box ul li {
+            list-style: none;
+            border-radius: 3px;
+            padding: 15px 10px;
+            cursor: pointer;
+        }
+
+        .result-box ul li:hover {
+            background: #e9f3ff;
+        }
+
+        .result-box {
+            max-height: 300px;
+            overflow-y: scroll;
+        }
     </style>
 </head>
 
 <body>
+
+    <header>
+        <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
+    </header>
 
     <div class="search-box">
         <div class="row">
@@ -180,11 +185,6 @@
         </div>
         <div class="result-box"></div>
     </div>
-    <script src="autocomplete.js"></script>
-  
-    <header>
-        <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
-    </header>
 
     <div class="main-buttons">
         <!-- The main button - PREPLADDER -->
@@ -195,20 +195,13 @@
     </div>
 
     <div class="additional-buttons1">
-    <!-- Anatomy button and its collapsible text -->
-    <button id="anatomyButton" onclick="fetchAndToggleContent('anatomyp.html', 'anatomyText', 'anatomy-section')">ANATOMY</button>
-    <div class="collapsible-text" id="anatomyText">
-        
-    </div>
+        <!-- Anatomy button and its collapsible text -->
+        <button id="anatomyButton" onclick="fetchAndToggleContent('anatomyp.html', 'anatomyText', 'anatomy-section')">ANATOMY</button>
+        <div class="collapsible-text" id="anatomyText"></div>
 
-
-    <!-- Anatomy button and its collapsible text -->
-    <button id="biochemestryButton" onclick="fetchAndToggleContent('biochemestryp.html', 'biochemestryText')">BIOCHEMESTRY</button>
-    <div class="collapsible-text" id="biochemestryText">
-    </div>
-        
-
-
+        <!-- Biochemistry button and its collapsible text -->
+        <button id="biochemestryButton" onclick="fetchAndToggleContent('biochemestryp.html', 'biochemestryText')">BIOCHEMESTRY</button>
+        <div class="collapsible-text" id="biochemestryText"></div>
 
         <!-- Back to Main Menu button -->
         <button class="back-button" onclick="backToMainMenu('additional-buttons1')">BACK TO MAIN MENU</button>
@@ -217,9 +210,7 @@
     <div class="additional-buttons2">
         <!-- Biochemistry button and its collapsible text -->
         <button id="biochemistryButton" onclick="fetchAndToggleContent('biochemistryp.html', 'biochemistryText')">BIOCHEMISTRY</button>
-        <div class="collapsible-text" id="biochemistryText">
-            <!-- Biochemistry content will be dynamically inserted here -->
-        </div>
+        <div class="collapsible-text" id="biochemistryText"></div>
 
         <!-- Back to Main Menu button -->
         <button class="back-button" onclick="backToMainMenu('additional-buttons2')">BACK TO MAIN MENU</button>
@@ -289,26 +280,12 @@
             var marrowButton = document.getElementById('marrowButton');
             marrowButton.style.display = 'block';
         }
-
+        
         const resultsBox = document.querySelector(".result-box");
         const inputBox = document.getElementById("input-box");
 
-        // Fetch the HTML file from the provided URL
-        fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/your-html-file.html')
-            .then(response => response.text())
-            .then(html => {
-                // Extract keywords from the table in the fetched HTML
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const table = doc.querySelector('table'); // Adjust the selector based on your HTML structure
-
-                if (table) {
-                    const rows = table.querySelectorAll('tr');
-                    const keywords = Array.from(rows).map(row => row.textContent.trim());
-                    updateAvailableKeywords(keywords);
-                }
-            })
-            .catch(error => console.error('Error fetching HTML:', error));
+        // This array will be updated with keywords fetched from HTML
+        let availableKeywords = [];
 
         inputBox.onkeyup = function () {
             let result = [];
@@ -335,13 +312,43 @@
             inputBox.value = list.innerHTML;
         }
 
-        function updateAvailableKeywords(newKeywords) {
-            // Update the availableKeywords array with the keywords fetched from the HTML table
-            availableKeywords = newKeywords;
-        }       
+        // Updated function to fetch HTML and extract keywords from all HTML files
+        function performSearch() {
+            const filenames = [
+                'anatomyp.html',
+                'biochemestryp.html',
+                'biochemistryp.html',
+                // Add more filenames as needed
+            ];
 
+            availableKeywords = [];
+
+            Promise.all(
+                filenames.map(filename => 
+                    fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/' + filename)
+                        .then(response => response.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const table = doc.querySelector('table'); // Adjust the selector based on your HTML structure
+
+                            if (table) {
+                                const rows = table.querySelectorAll('tr');
+                                const keywords = Array.from(rows).map(row => row.textContent.trim());
+                                availableKeywords = availableKeywords.concat(keywords);
+                            }
+                        })
+                )
+            )
+            .then(() => {
+                // Trigger the search with the current input
+                inputBox.dispatchEvent(new Event('keyup'));
+            })
+            .catch(error => console.error('Error fetching HTML:', error));
+        }
     </script>
 
 </body>
 
 </html>
+
