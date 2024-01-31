@@ -28,11 +28,14 @@
             transition-property: box-shadow, transform;            
         }
 
-        button:hover, button:focus; button:active {
+        button:hover,
+        button:focus,
+        button:active {
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             -webkit-transform: scale(1.1);
             transform: scale(1.1);
         }
+
 
         body {
             margin: 20px; /* You can adjust the value to set the desired margin size */
@@ -107,85 +110,11 @@
             font-weight: bold;
             color: #009879;
         }
-
-        /* Style for the search bar */
-        .search-box {
-            width: 600px;
-            background: #fff;
-            margin: 20px auto;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .row {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-        }
-
-        input {
-            flex: 1;
-            height: 50px;
-            background: transparent;
-            border: 0;
-            outline: 0;
-            font-size: 18px;
-            color: #333;
-        }
-
-        button {
-            background: #1E90FF;
-            border: 0;
-            outline: 0;
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        button .fa-solid {
-            width: 25px;
-            color: #fff;
-            font-size: 22px;
-            curser: pointer;
-        }
-
-        ::placeholder {
-            color: #555;
-        }
-
-        .result-box ul {
-            border-top: 1px solid #999;
-            padding: 15px 10px;
-        }
-
-        .result-box ul li {
-            list-style: none;
-            border-radius: 3px;
-            padding: 15px 10px;
-            cursor: pointer;
-        }
-
-        .result-box ul li:hover {
-            background: #e9f3ff;
-        }
-
-        .result-box {
-            max-height: 300px;
-            overflow-y: scroll;
-        }
+       
     </style>
-    <script src="https://kit.fontawesome.com/c4254e24a8.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-
-    <div class="search-box">
-        <div class="row">
-            <input type="text" id="input-box" placeholder="Search anything" autocomplete="off">
-            <button onclick="performSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </div>
-        <div class="result-box"></div>
-    </div>
 
     <header>
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
@@ -285,72 +214,28 @@
             var marrowButton = document.getElementById('marrowButton');
             marrowButton.style.display = 'block';
         }
-        
-        const resultsBox = document.querySelector(".result-box");
-        const inputBox = document.getElementById("input-box");
+        const searchFun = () => {
+            let filter = document.getElementById('myInput').value.toUpperCase();
+            let contentTable = document.querySelector('.content-table');
+            let rows = contentTable.querySelectorAll('tbody tr');
 
-        // This array will be updated with keywords fetched from HTML
-        let availableKeywords = [];
+            rows.forEach(row => {
+                let cells = row.getElementsByTagName('td');
 
-        inputBox.onkeyup = function () {
-            let result = [];
-            let input = inputBox.value;
-
-            if (input.length) {
-                result = availableKeywords.filter((keyword) => {
-                    return keyword.toLowerCase().includes(input.toLowerCase());
+                let rowMatches = Array.from(cells).some(cell => {
+                   let textValue = cell.textContent || cell.innerHTML;
+                   return textValue.toUpperCase().includes(filter);
                 });
-            }
 
-            display(result);
+                if (rowMatches) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         };
 
-        function display(result) {
-            const content = result.map((list) => {
-                return "<li onclick='selectInput(this)'>" + list + "</li>";
-            });
-
-            resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
-        }
-
-        function selectInput(list) {
-            inputBox.value = list.innerHTML;
-        }
-
-        // Updated function to fetch HTML and extract keywords from all HTML files
-        function performSearch() {
-            const filenames = [
-                'anatomyp.html',
-                'biochemestryp.html',
-                'biochemistryp.html',
-                // Add more filenames as needed
-            ];
-
-            availableKeywords = [];
-
-            Promise.all(
-                filenames.map(filename => 
-                    fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/' + filename)
-                        .then(response => response.text())
-                        .then(html => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-                            const table = doc.querySelector('table'); // Adjust the selector based on your HTML structure
-
-                            if (table) {
-                                const rows = table.querySelectorAll('tr');
-                                const keywords = Array.from(rows).map(row => row.textContent.trim());
-                                availableKeywords = availableKeywords.concat(keywords);
-                            }
-                        })
-                )
-            )
-            .then(() => {
-                // Trigger the search with the current input
-                inputBox.dispatchEvent(new Event('keyup'));
-            })
-            .catch(error => console.error('Error fetching HTML:', error));
-        }
+        
     </script>
 
 </body>
