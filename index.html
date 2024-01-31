@@ -282,27 +282,56 @@
             var marrowButton = document.getElementById('marrowButton');
             marrowButton.style.display = 'block';
         }
-        const searchFun = () => {
-            let filter = document.getElementById('myInput').value.toUpperCase();
-            let contentTable = document.querySelector('.content-table');
-            let rows = contentTable.querySelectorAll('tbody tr');
 
-            rows.forEach(row => {
-                let cells = row.getElementsByTagName('td');
+        const resultsBox = document.querySelector(".result-box");
+        const inputBox = document.getElementById("input-box");
 
-                let rowMatches = Array.from(cells).some(cell => {
-                    let textValue = cell.textContent || cell.innerHTML;
-                    return textValue.toUpperCase().includes(filter);
-                });
+        // Fetch the HTML file from the provided URL
+        fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/your-html-file.html')
+            .then(response => response.text())
+            .then(html => {
+                // Extract keywords from the table in the fetched HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const table = doc.querySelector('table'); // Adjust the selector based on your HTML structure
 
-                if (rowMatches) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
+                if (table) {
+                    const rows = table.querySelectorAll('tr');
+                    const keywords = Array.from(rows).map(row => row.textContent.trim());
+                    updateAvailableKeywords(keywords);
                 }
-            });
+            })
+            .catch(error => console.error('Error fetching HTML:', error));
+
+        inputBox.onkeyup = function () {
+            let result = [];
+            let input = inputBox.value;
+
+            if (input.length) {
+                result = availableKeywords.filter((keyword) => {
+                    return keyword.toLowerCase().includes(input.toLowerCase());
+                });
+            }
+
+            display(result);
         };
 
+        function display(result) {
+            const content = result.map((list) => {
+                return "<li onclick='selectInput(this)'>" + list + "</li>";
+            });
+
+            resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
+        }
+
+        function selectInput(list) {
+            inputBox.value = list.innerHTML;
+        }
+
+        function updateAvailableKeywords(newKeywords) {
+            // Update the availableKeywords array with the keywords fetched from the HTML table
+            availableKeywords = newKeywords;
+        }       
 
     </script>
 
