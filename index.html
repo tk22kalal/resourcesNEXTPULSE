@@ -284,11 +284,12 @@
   </div>
 
   <div class="additional-buttons2">
-        <!-- Anatomy button and its collapsible text -->
-        <button id="anatomymButton" onclick="fetchAndToggleContent('anatomym.html', 'anatomymText', 'anatomy-section')">ANATOMY</button>
-        <div class="collapsible-text" id="anatomymText"></div>
-      
-    
+     <!-- Anatomy button and its collapsible text -->
+     <button id="anatomymButton" onclick="openURL('https://www.toprevenuegate.com/h60mzeawt?key=0a67a50f3b04b5bb89e7083511ca026e')">ANATOMY</button>
+     <div class="collapsible-text" id="anatomymText">
+      <!-- Anatomy content will be dynamically inserted here -->
+      </div>
+             
     <!-- Biochemestry button and its collapsible text -->
     <button id="biochemestrymButton" onclick="fetchAndToggleContent('biochemestrym.html', 'biochemestrymText')">BIOCHEMESTRY</button>
     <div class="collapsible-text" id="biochemestrymText">
@@ -509,6 +510,9 @@
             // Attach the search function to the input element
             document.getElementById(inputId).addEventListener('keyup', searchFun);
         }
+	function openURL(url) {
+	    window.open(url, '_blank');
+	}
     </script>
 
 </body>
