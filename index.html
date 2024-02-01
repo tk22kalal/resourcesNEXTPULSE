@@ -125,7 +125,8 @@
     </style>
 </head>
 <body>
-
+    
+    <input type="text" id="input-box2" placeholder="Search anything" autocomplete="off" onkeyup="searchLectures()">
     <header>
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
     </header>
@@ -510,6 +511,10 @@
             // Attach the search function to the input element
             document.getElementById(inputId).addEventListener('keyup', searchFun);
         }
+	const searchLectures = () => {
+	    let filter = document.getElementById('Input-Box2');
+
+	    let 
 	function openURL(url) {
 	    window.open(url, '_blank');
 	}
