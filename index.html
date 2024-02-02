@@ -135,24 +135,7 @@
 
     <header>
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
-    </header>
-	
-    <header>
-        <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
-    </header>
-
-    <script type="text/javascript">
-	atOptions = {
-		'key' : '6d5b9ebb8cd94f98531a1b63dbb62b71',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-	document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/6d5b9ebb8cd94f98531a1b63dbb62b71/invoke.js"></scr' + 'ipt>');
-     </script>
-
-    <input type="text" id="input-box" placeholder="Search anything" autocomplete="off">
+    </header>	        
     
     <div class="main-buttons">
         <!-- The main button - PREPLADDER -->
@@ -487,42 +470,13 @@
                         heading.style.display = 'block';
                     });
 
-		    searchLectures(contentContainer, 'input-box2');
-
                     // Search functionality within the loaded content table
                     enableSearchInContentTable(contentContainer, 'input-box');
 
                     contentContainer.style.display = (contentContainer.style.display === 'block') ? 'none' : 'block';
                 })
                 .catch(error => console.error('Error fetching content:', error));
-        }
-
-        // New function for enabling search in the loaded content table
-        function enableSearchInContentTable(contentContainer, inputId) {
-            const searchFun = () => {
-                let filter = document.getElementById(inputId).value.toUpperCase();
-                let contentTable = contentContainer.querySelector('.content-table');
-                let rows = contentTable.querySelectorAll('tbody tr');
-
-                rows.forEach(row => {
-                    let cells = row.getElementsByTagName('td');
-
-                    let rowMatches = Array.from(cells).some(cell => {
-                        let textValue = cell.textContent || cell.innerHTML;
-                        return textValue.toUpperCase().includes(filter);
-                    });
-
-                    if (rowMatches) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-            };
-
-            // Attach the search function to the input element
-            document.getElementById(inputId).addEventListener('keyup', searchFun);
-        }	     	
+        }       
 	       
         function getSuggestions() {
             const input = document.getElementById('searchInput').value.toLowerCase();
