@@ -98,7 +98,22 @@
             font-weight: bold;
             color: #009879;
         }
-        /* Add this to your existing styles */
+        #suggestionList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        #suggestionList li {
+            padding: 8px;
+            cursor: pointer;
+        }
 
        /* Style for the search bar */
        #input-box {
@@ -126,20 +141,39 @@
 </head>
 <body>
 
-    <form>
+     <form>
         <label for="searchInput">Search:</label>
-        <input type="text" id="searchInput" placeholder="Enter your search term..." oninput="getSuggestions()">
+        <div style="position: relative;">
+            <input type="text" id="searchInput" placeholder="Enter your search term..." oninput="getSuggestions()">
+            <ul id="suggestionList"></ul>
+        </div>
     </form>
-
-    <ul id="suggestionList"></ul>
 
     <header>
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
-    </header>	        
+    </header>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3996810027143708"
+     crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+	atOptions = {
+		'key' : '6d5b9ebb8cd94f98531a1b63dbb62b71',
+		'format' : 'iframe',
+		'height' : 250,
+		'width' : 300,
+		'params' : {}
+	};
+	document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/6d5b9ebb8cd94f98531a1b63dbb62b71/invoke.js"></scr' + 'ipt>');
+     </script>
+
+    <input type="text" id="input-box" placeholder="Search anything" autocomplete="off">
     
     <div class="main-buttons">
         <!-- The main button - PREPLADDER -->
         <button id="prepladderButton" onclick="showPrepladderButtons()">PREPLADDER</button>
+
+	<script type='text/javascript' src='//pl22368920.toprevenuegate.com/0f/28/80/0f288043c41188f69548c49fed467531.js'></script>
 
         <!-- The main button - MARROW -->
         <button id="marrowButton" onclick="showMarrowButtons()">MARROW</button>
@@ -476,9 +510,39 @@
                     contentContainer.style.display = (contentContainer.style.display === 'block') ? 'none' : 'block';
                 })
                 .catch(error => console.error('Error fetching content:', error));
-        }       
-	       
-        function getSuggestions() {
+        }
+
+        // New function for enabling search in the loaded content table
+        function enableSearchInContentTable(contentContainer, inputId) {
+            const searchFun = () => {
+                let filter = document.getElementById(inputId).value.toUpperCase();
+                let contentTable = contentContainer.querySelector('.content-table');
+                let rows = contentTable.querySelectorAll('tbody tr');
+
+                rows.forEach(row => {
+                    let cells = row.getElementsByTagName('td');
+
+                    let rowMatches = Array.from(cells).some(cell => {
+                        let textValue = cell.textContent || cell.innerHTML;
+                        return textValue.toUpperCase().includes(filter);
+                    });
+
+                    if (rowMatches) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            };
+
+            // Attach the search function to the input element
+            document.getElementById(inputId).addEventListener('keyup', searchFun);
+        }
+	function openURL(url) {
+	    window.open(url, '_blank');
+	}
+
+	function getSuggestions() {
             const input = document.getElementById('searchInput').value.toLowerCase();
             const suggestionList = document.getElementById('suggestionList');
 
@@ -493,10 +557,15 @@
                     const doc = parser.parseFromString(html, 'text/html');
 
                     // Get the table from the fetched HTML
-                    const table = doc.querySelector('.content-table');
+                    const table = doc.querySelector('table'); // Corrected selector
 
                     // Clear previous suggestions
                     suggestionList.innerHTML = '';
+
+                    // Check if the input is empty
+                    if (input.trim() === '') {
+                        return; // Do not show suggestions if the input is empty
+                    }
 
                     // Iterate through each row in the table
                     for (let i = 1; i < table.rows.length; i++) {
@@ -506,18 +575,20 @@
                         if (rowText.includes(input)) {
                             const suggestionItem = document.createElement('li');
                             suggestionItem.textContent = rowText;
+                            suggestionItem.onclick = function() {
+                                document.getElementById('searchInput').value = rowText;
+                                suggestionList.innerHTML = '';
+                            };
                             suggestionList.appendChild(suggestionItem);
                         }
                     }
                 })
                 .catch(error => console.error('Error fetching data:', error));
-               
-
-	function openURL(url) {
-	    window.open(url, '_blank');
-	}
+        }
+	    
     </script>
 
 </body>
 
 </html>
+
