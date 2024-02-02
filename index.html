@@ -520,30 +520,41 @@
             // Attach the search function to the input element
             document.getElementById(inputId).addEventListener('keyup', searchFun);
         }
-	const resultsBox = document.querySelector(".result-box");
-	const inputBox = document.getElementById("input-box2");		    	    	
-	const searchLectures = (contentContainer, inputId) => {
-	        let filter = document.getElementById(inputId).value.toUpperCase();
-	        let contentTable = contentContainer.querySelector('.content-table');
+	
+	    const resultsBox = document.querySelector(".result-box");
+	    const inputBox = document.getElementById("input-box2");
+	
+	    const searchLectures = () => {
+	        let filter = inputBox.value.toUpperCase();
+	        let contentTable = document.querySelector('.content-table');
 	        let rows = contentTable.querySelectorAll('tbody tr');
+	        let suggestions = [];
 	
 	        rows.forEach(row => {
 	            let cells = row.getElementsByTagName('td');
-	
-	            let rowMatches = Array.from(cells).some(cell => {
+	            Array.from(cells).forEach(cell => {
 	                let textValue = cell.textContent || cell.innerHTML;
-	                return textValue.toUpperCase().includes(filter);
-	            });	            
+	                if (textValue.toUpperCase().includes(filter) && !suggestions.includes(textValue)) {
+	                    suggestions.push(textValue);
+	                }
+	            });
 	        });
 	
-	        function display(textValue) {
-	            const content = result.map((list) => {
-	                return "<li>" + list + "</li>";
-	            });
-	            resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
-	        }
-		document.getElementById(inputId).addEventListener('keyup', searchLectures);
+	        displaySuggestions(suggestions);
 	    };
+	
+	    function displaySuggestions(suggestions) {
+	        const content = suggestions.map(suggestion => `<li>${suggestion}</li>`);
+	        resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
+	    }
+	
+	    // Function to handle item click (you can modify this based on your requirements)
+	    resultsBox.addEventListener('click', (event) => {
+	        if (event.target.tagName === 'LI') {
+	            inputBox.value = event.target.innerText;
+	            resultsBox.innerHTML = ""; // Clear suggestions
+	        }
+	    });
 	
 	function openURL(url) {
 	    window.open(url, '_blank');
