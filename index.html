@@ -126,12 +126,12 @@
 </head>
 <body>
     
-    <div class="search-box">
-        <div class="row">
-            <input type="text" id="input-box2" placeholder="Search anything" autocomplete="off" onkeyup="searchLectures()">
-        </div>
-        <div class="result-box"></div>
-    </div>
+    <form>
+        <label for="searchInput">Search:</label>
+        <input type="text" id="searchInput" placeholder="Enter your search term..." oninput="getSuggestions()">
+    </form>
+
+    <ul id="suggestionList"></ul>
 
     <header>
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
@@ -599,8 +599,41 @@
                     }
                 })
                 .catch(error => console.error('Error fetching data:', error));
-       
+    
+        function getSuggestions() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const suggestionList = document.getElementById('suggestionList');
 
+            // GitHub URL of the HTML file with the table
+            const githubURL = 'https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/anatomyp.html';
+
+            // Fetch the HTML content
+            fetch(githubURL)
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+
+                    // Get the table from the fetched HTML
+                    const table = doc.querySelector('.content-table');
+
+                    // Clear previous suggestions
+                    suggestionList.innerHTML = '';
+
+                    // Iterate through each row in the table
+                    for (let i = 1; i < table.rows.length; i++) {
+                        const rowText = table.rows[i].textContent.toLowerCase();
+
+                        // Check if the input matches any part of the row text
+                        if (rowText.includes(input)) {
+                            const suggestionItem = document.createElement('li');
+                            suggestionItem.textContent = rowText;
+                            suggestionList.appendChild(suggestionItem);
+                        }
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+               
 
 	function openURL(url) {
 	    window.open(url, '_blank');
