@@ -541,8 +541,10 @@
 	        });
 	
 	        displaySuggestions(suggestions);
-	    };
-	
+	    } else {
+                resultsBox.innerHTML = ""; // Clear suggestions if input is empty
+            }    
+	    	
 	    function displaySuggestions(suggestions) {
 	        const content = suggestions.map(suggestion => `<li>${suggestion}</li>`);
 	        resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
