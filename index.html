@@ -542,6 +542,7 @@
 	            });
 	            resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
 	        }
+		document.getElementById(inputId).addEventListener('keyup', searchLectures);
 	    };
 	
 	function openURL(url) {
