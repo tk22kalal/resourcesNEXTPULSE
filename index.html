@@ -153,6 +153,14 @@
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
     </header>
 
+     <form>
+        <label for="searchInput">Search:</label>
+        <div style="position: relative;">
+            <input type="text" id="searchInput" placeholder="Enter your search term..." oninput="getSuggestions()">
+            <ul id="suggestionList"></ul>
+        </div>
+    </form>
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3996810027143708"
      crossorigin="anonymous"></script>
 
@@ -542,49 +550,73 @@
 	    window.open(url, '_blank');
 	}
 
-	    function getSuggestions() {
-	    const input = document.getElementById('searchInput').value.toLowerCase();
-	    const suggestionList = document.getElementById('suggestionList');
-	
-	    // GitHub URL of the HTML file with the table
-	    const githubURL = 'https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/';
-	
-	    // Fetch the HTML content
-	    fetch(githubURL + input + '.html') // Use the input variable to construct the URL
-	        .then(response => response.text())
-	        .then(html => {
-	            const parser = new DOMParser();
-	            const doc = parser.parseFromString(html, 'text/html');
-	
-	            // Get the table from the fetched HTML
-	            const table = doc.querySelector('table');
-	
-	            // Clear previous suggestions
-	            suggestionList.innerHTML = '';
-	
-	            // Check if the input is empty
-	            if (input.trim() === '') {
-	                return; // Do not show suggestions if the input is empty
-	            }
-	
-	            // Iterate through each row in the table
-	            for (let i = 1; i < table.rows.length; i++) {
-	                const rowText = table.rows[i].textContent.toLowerCase();
-	
-	                // Check if the input matches any part of the row text
-	                if (rowText.includes(input)) {
-	                    const suggestionItem = document.createElement('li');
-	                    suggestionItem.textContent = rowText;
-	                    suggestionItem.onclick = function() {
-	                        document.getElementById('searchInput').value = rowText;
-	                        suggestionList.innerHTML = '';
-	                    };
-	                    suggestionList.appendChild(suggestionItem);
-	                }
-	            }
-	        })
-	        .catch(error => console.error('Error fetching data:', error));
-	}
+	function getSuggestions() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const suggestionList = document.getElementById('suggestionList');
+
+            // GitHub URL of the HTML files in the plugins folder
+            const githubURL = 'https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/';
+
+            // Array of filenames to search through
+            const filenames = [];
+
+            // Iterate through each set of buttons
+            for (let i = 1; ; i++) {
+                const buttonSet = document.querySelector('.additional-buttons' + i);
+                if (!buttonSet) break;
+
+                // Iterate through each button in the set and extract filenames
+                const buttons = buttonSet.querySelectorAll('button');
+                buttons.forEach(button => {
+                    const onclickAttribute = button.getAttribute('onclick');
+                    if (onclickAttribute) {
+                        const filename = onclickAttribute.match(/fetchAndToggleContent\('([^']*)'/)[1];
+                        filenames.push(filename);
+                    }
+                });
+            }
+
+            // Clear previous suggestions
+            suggestionList.innerHTML = '';
+
+            // Check if the input is empty
+            if (input.trim() === '') {
+                return; // Do not show suggestions if the input is empty
+            }
+
+            // Iterate through each filename
+            filenames.forEach(filename => {
+                // Fetch the HTML content
+                fetch(githubURL + filename)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        // Get the table from the fetched HTML
+                        const table = doc.querySelector('table');
+
+                        // Iterate through each row in the table
+                        for (let i = 1; i < table.rows.length; i++) {
+                            const rowText = table.rows[i].textContent.toLowerCase();
+
+                            // Check if the input matches any part of the row text
+                            if (rowText.includes(input)) {
+                                const suggestionItem = document.createElement('li');
+                                const link = table.rows[i].querySelector('a');
+                                if (link) {
+                                    suggestionItem.innerHTML = `<a href="${link.href}" target="_blank">${rowText}</a>`;
+                                } else {
+                                    suggestionItem.textContent = rowText;
+                                }
+                                suggestionList.appendChild(suggestionItem);
+                            }
+                        }
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            });
+        }
+	    
 
 	    
     </script>
