@@ -125,14 +125,59 @@
     </style>
 </head>
 <body>
-
+    
     <div class="search-box">
         <div class="row">
             <input type="text" id="input-box2" placeholder="Search anything" autocomplete="off" onkeyup="searchLectures()">
         </div>
-            <div class="result-box">
-        </div>
+        <div class="result-box"></div>
     </div>
+
+    <header>
+        <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
+    </header>
+
+    <script type="text/javascript">
+        const resultsBox = document.querySelector(".result-box");
+        const inputBox = document.getElementById("input-box2");
+
+        const searchLectures = () => {
+            let filter = inputBox.value.trim().toUpperCase();
+
+            // Check if the search input is not empty
+            if (filter) {
+                let contentTable = document.querySelector('.content-table');
+                let rows = contentTable.querySelectorAll('tbody tr');
+                let suggestions = [];
+
+                rows.forEach(row => {
+                    let cells = row.getElementsByTagName('td');
+                    Array.from(cells).forEach(cell => {
+                        let textValue = cell.textContent || cell.innerHTML;
+                        if (textValue.toUpperCase().includes(filter) && !suggestions.includes(textValue)) {
+                            suggestions.push(textValue);
+                        }
+                    });
+                });
+
+                displaySuggestions(suggestions);
+            } else {
+                resultsBox.innerHTML = ""; // Clear suggestions if input is empty
+            }
+        };
+
+        function displaySuggestions(suggestions) {
+            const content = suggestions.map(suggestion => `<li>${suggestion}</li>`);
+            resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
+        }
+
+        // Function to handle item click (you can modify this based on your requirements)
+        resultsBox.addEventListener('click', (event) => {
+            if (event.target.tagName === 'LI') {
+                inputBox.value = event.target.innerText;
+                resultsBox.innerHTML = ""; // Clear suggestions
+            }
+        });
 
     <header>
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
@@ -519,42 +564,7 @@
 
             // Attach the search function to the input element
             document.getElementById(inputId).addEventListener('keyup', searchFun);
-        }
-	
-	    const resultsBox = document.querySelector(".result-box");
-	    const inputBox = document.getElementById("input-box2");
-	
-	    const searchLectures = () => {
-	        let filter = inputBox.value.toUpperCase();
-	        let contentTable = document.querySelector('.content-table');
-	        let rows = contentTable.querySelectorAll('tbody tr');
-	        let suggestions = [];
-	
-	        rows.forEach(row => {
-	            let cells = row.getElementsByTagName('td');
-	            Array.from(cells).forEach(cell => {
-	                let textValue = cell.textContent || cell.innerHTML;
-	                if (textValue.toUpperCase().includes(filter) && !suggestions.includes(textValue)) {
-	                    suggestions.push(textValue);
-	                }
-	            });
-	        });
-	
-		    displaySuggestions(suggestions);	        
-	    };
-	
-	    function displaySuggestions(suggestions) {
-	        const content = suggestions.map(suggestion => `<li>${suggestion}</li>`);
-	        resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
-	    }
-	
-	    // Function to handle item click (you can modify this based on your requirements)
-	    resultsBox.addEventListener('click', (event) => {
-	        if (event.target.tagName === 'LI') {
-	            inputBox.value = event.target.innerText;
-	            resultsBox.innerHTML = ""; // Clear suggestions
-	        }
-	    });
+        }	     	
 	
 	function openURL(url) {
 	    window.open(url, '_blank');
