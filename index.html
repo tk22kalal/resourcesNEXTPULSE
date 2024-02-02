@@ -546,7 +546,7 @@
         });
 
         function display(textValue) {
-            const content = result.map((list) => {
+            const content = textValue.map((list) => {
                 return "<li>" + list + "</li>";
             });
             resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
