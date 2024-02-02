@@ -125,8 +125,15 @@
     </style>
 </head>
 <body>
-    
-    <input type="text" id="input-box2" placeholder="Search anything" autocomplete="off" onkeyup="searchLectures()">
+
+    <div class="search-box">
+	<div class="row">
+	    <input type="text" id="input-box2" placeholder="Search anything" autocomplete="off" onkeyup="searchLectures()">
+	</div>
+	<div class="result-box">
+	</div>
+    </div>
+	
     <header>
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
     </header>
@@ -511,10 +518,35 @@
             // Attach the search function to the input element
             document.getElementById(inputId).addEventListener('keyup', searchFun);
         }
+	const resultsBox = document.querySalector(".result-box");
+	const inputBox = document.getElementById("input-box2");
+	
 	const searchLectures = () => {
-	    let filter = document.getElementById('Input-Box2');
+	    let filter = document.getElementById('input-box2').value.toUpperCase();
+            let contentTable = contentContainer.querySelector('.content-table');
+            let rows = contentTable.querySelectorAll('tbody tr');
 
-	    let 
+            rows.forEach(row => {
+                let cells = row.getElementsByTagName('td');
+
+                let rowMatches = Array.from(cells).some(cell => {
+                    let textValue = cell.textContent || cell.innerHTML;
+                    return textValue.toUpperCase().includes(filter);
+                 });
+
+                 if (rowMatches) {
+                     row.style.display = '';
+                 } else {
+                     row.style.display = 'none';
+                 }
+	      });
+	   function display(textValue) {
+              const content = result.map((list)=> {
+                  return "<li>" + list + "</li>";
+	       });
+	       resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
+
+
 	function openURL(url) {
 	    window.open(url, '_blank');
 	}
