@@ -175,7 +175,7 @@
 	document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/6d5b9ebb8cd94f98531a1b63dbb62b71/invoke.js"></scr' + 'ipt>');
      </script>
 
-    <input type="text" id="input-box" placeholder="Search anything" autocomplete="off">
+    
     
     <div class="main-buttons">
         <!-- The main button - PREPLADDER -->
@@ -588,8 +588,8 @@
         }
 
         // New function for enabling search in the loaded content table
-        function enableSearchInContentTable(contentContainer, inputId) {
-            const searchFun = () => {
+        #function enableSearchInContentTable(contentContainer, inputId) {
+            #const searchFun = () => {
                 let filter = document.getElementById(inputId).value.toUpperCase();
                 let contentTable = contentContainer.querySelector('.content-table');
                 let rows = contentTable.querySelectorAll('tbody tr');
