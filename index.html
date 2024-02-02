@@ -533,13 +533,7 @@
 	            let rowMatches = Array.from(cells).some(cell => {
 	                let textValue = cell.textContent || cell.innerHTML;
 	                return textValue.toUpperCase().includes(filter);
-	            });
-	
-	            if (rowMatches) {
-	                row.style.display = '';
-	            } else {
-	                row.style.display = 'none';
-	            }
+	            });	            
 	        });
 	
 	        function display(textValue) {
