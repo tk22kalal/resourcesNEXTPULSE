@@ -126,14 +126,6 @@
 </head>
 <body>
 
-    <div class="search-box">
-        <div class="row">
-            <input type="text" id="input-box2" placeholder="Search anything" autocomplete="off" onkeyup="searchLectures()">
-        </div>
-            <div class="result-box">
-        </div>
-    </div>
-
     <header>
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
     </header>
@@ -484,8 +476,6 @@
                         heading.style.display = 'block';
                     });
 
-		    searchLectures(contentContainer, 'input-box2');
-
                     // Search functionality within the loaded content table
                     enableSearchInContentTable(contentContainer, 'input-box');
 
@@ -520,41 +510,6 @@
             // Attach the search function to the input element
             document.getElementById(inputId).addEventListener('keyup', searchFun);
         }
-	   
-	    const resultsBox = document.querySelector(".result-box");
-	    const inputBox = document.getElementById("input-box2");
-	
-	    function fetchAndToggleContent(filename, textId, headingClass) {
-	    
-	
-	    const searchLectures = (contentContainer, inputId) => {
-	        let filter = document.getElementById(inputId).value.toUpperCase();
-	        let contentTable = contentContainer.querySelector('.content-table');
-	        let rows = contentTable.querySelectorAll('tbody tr');
-	
-	        rows.forEach(row => {
-	            let cells = row.getElementsByTagName('td');
-	
-	            let rowMatches = Array.from(cells).some(cell => {
-	                let textValue = cell.textContent || cell.innerHTML;
-	                return textValue.toUpperCase().includes(filter);
-	            });
-	
-	            if (rowMatches) {
-	                row.style.display = '';
-	            } else {
-	                row.style.display = 'none';
-	            }
-	        });
-	
-	        function display(textValue) {
-	            const content = result.map((list) => {
-	                return "<li>" + list + "</li>";
-	            });
-	            resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
-	        }
-	    };
-	
 	function openURL(url) {
 	    window.open(url, '_blank');
 	}
