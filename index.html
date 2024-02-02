@@ -153,13 +153,13 @@
         <img src="https://i.postimg.cc/FRFC4qrB/IMG-20240110-192854-828.jpg" alt="Header Image" style="height: 150px;">
     </header>
 
-     <form>
+      <form>
         <label for="searchInput">Search:</label>
         <div style="position: relative;">
             <input type="text" id="searchInput" placeholder="Enter your search term..." oninput="getSuggestions()">
             <ul id="suggestionList"></ul>
         </div>
-    </form>
+     </form>
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3996810027143708"
      crossorigin="anonymous"></script>
@@ -492,64 +492,6 @@
             marrowButton.style.display = 'block';
         }
 
-        // Updated fetchAndToggleContent function
-        function fetchAndToggleContent(filename, textId, headingClass) {
-            var contentContainer = document.getElementById(textId);
-
-            fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/' + filename)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    contentContainer.innerHTML = data;
-
-                    // Toggle the display of headings based on the headingClass parameter
-                    var headings = contentContainer.querySelectorAll('.' + headingClass + ' h2');
-                    headings.forEach(heading => {
-                        heading.style.display = 'block';
-                    });
-
-                    // Search functionality within the loaded content table
-                    enableSearchInContentTable(contentContainer, 'input-box');
-
-                    contentContainer.style.display = (contentContainer.style.display === 'block') ? 'none' : 'block';
-                })
-                .catch(error => console.error('Error fetching content:', error));
-        }
-
-        // New function for enabling search in the loaded content table
-        function enableSearchInContentTable(contentContainer, inputId) {
-            const searchFun = () => {
-                let filter = document.getElementById(inputId).value.toUpperCase();
-                let contentTable = contentContainer.querySelector('.content-table');
-                let rows = contentTable.querySelectorAll('tbody tr');
-
-                rows.forEach(row => {
-                    let cells = row.getElementsByTagName('td');
-
-                    let rowMatches = Array.from(cells).some(cell => {
-                        let textValue = cell.textContent || cell.innerHTML;
-                        return textValue.toUpperCase().includes(filter);
-                    });
-
-                    if (rowMatches) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-            };
-
-            // Attach the search function to the input element
-            document.getElementById(inputId).addEventListener('keyup', searchFun);
-        }
-	function openURL(url) {
-	    window.open(url, '_blank');
-	}
-
 	function getSuggestions() {
             const input = document.getElementById('searchInput').value.toLowerCase();
             const suggestionList = document.getElementById('suggestionList');
@@ -616,8 +558,64 @@
                     .catch(error => console.error('Error fetching data:', error));
             });
         }
-	    
 
+        // Updated fetchAndToggleContent function
+        function fetchAndToggleContent(filename, textId, headingClass) {
+            var contentContainer = document.getElementById(textId);
+
+            fetch('https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/' + filename)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    contentContainer.innerHTML = data;
+
+                    // Toggle the display of headings based on the headingClass parameter
+                    var headings = contentContainer.querySelectorAll('.' + headingClass + ' h2');
+                    headings.forEach(heading => {
+                        heading.style.display = 'block';
+                    });
+
+                    // Search functionality within the loaded content table
+                    enableSearchInContentTable(contentContainer, 'input-box');
+
+                    contentContainer.style.display = (contentContainer.style.display === 'block') ? 'none' : 'block';
+                })
+                .catch(error => console.error('Error fetching content:', error));
+        }
+
+        // New function for enabling search in the loaded content table
+        function enableSearchInContentTable(contentContainer, inputId) {
+            const searchFun = () => {
+                let filter = document.getElementById(inputId).value.toUpperCase();
+                let contentTable = contentContainer.querySelector('.content-table');
+                let rows = contentTable.querySelectorAll('tbody tr');
+
+                rows.forEach(row => {
+                    let cells = row.getElementsByTagName('td');
+
+                    let rowMatches = Array.from(cells).some(cell => {
+                        let textValue = cell.textContent || cell.innerHTML;
+                        return textValue.toUpperCase().includes(filter);
+                    });
+
+                    if (rowMatches) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            };
+
+            // Attach the search function to the input element
+            document.getElementById(inputId).addEventListener('keyup', searchFun);
+        }
+	function openURL(url) {
+	    window.open(url, '_blank');
+	}		    
 	    
     </script>
 
