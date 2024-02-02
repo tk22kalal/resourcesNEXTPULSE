@@ -550,7 +550,7 @@
             const githubURL = 'https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/';
 
             // Fetch the HTML content
-            fetch(githubURL)
+            fetch(githubURL + 'anatomyp.html')
                 .then(response => response.text())
                 .then(html => {
                     const parser = new DOMParser();
