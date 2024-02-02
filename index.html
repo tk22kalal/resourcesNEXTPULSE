@@ -542,7 +542,7 @@
 	    window.open(url, '_blank');
 	}
 
-	function getSuggestions() {
+	function getSuggestions(filename) {
             const input = document.getElementById('searchInput').value.toLowerCase();
             const suggestionList = document.getElementById('suggestionList');
 
@@ -550,7 +550,7 @@
             const githubURL = 'https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/';
 
             // Fetch the HTML content
-            fetch(githubURL + 'anatomyp.html')
+            fetch(githubURL + 'filename')
                 .then(response => response.text())
                 .then(html => {
                     const parser = new DOMParser();
