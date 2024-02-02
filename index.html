@@ -525,8 +525,8 @@
     const resultsBox = document.querySelector(".result-box");
     const inputBox = document.getElementById("input-box2");
 
-    const searchLectures = () => {
-        let filter = inputBox.value.toUpperCase();
+    function searchLectures(contentContainer, inputId) {
+        let filter = document.getElementById(inputId).value.toUpperCase();
         let contentTable = contentContainer.querySelector('.content-table');
         let rows = contentTable.querySelectorAll('tbody tr');
 
@@ -537,12 +537,6 @@
                 let textValue = cell.textContent || cell.innerHTML;
                 return textValue.toUpperCase().includes(filter);
             });
-
-            if (rowMatches) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
         });
 
         function display(textValue) {
@@ -552,6 +546,9 @@
             resultsBox.innerHTML = "<ul>" + content.join('') + "</ul>";
         }
     };
+        document.getElementById(inputId).addEventListener('keyup', searchLectures);
+        }
+
 
 	
 	function openURL(url) {
