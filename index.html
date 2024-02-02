@@ -565,49 +565,42 @@
             // Attach the search function to the input element
             document.getElementById(inputId).addEventListener('keyup', searchFun);
         }	     	
-	
+	       
         function getSuggestions() {
             const input = document.getElementById('searchInput').value.toLowerCase();
             const suggestionList = document.getElementById('suggestionList');
 
-            // GitHub repository base URL
-            const githubBaseURL = 'https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/';
+            // GitHub URL of the HTML file with the table
+            const githubURL = 'https://raw.githubusercontent.com/tk22kalal/resourcesNEXTPULSE/master/plugins/anatomyp.html';
 
-            // List of HTML files in the "plugins" folder
-            const htmlFiles = ['file1.html', 'file2.html', 'file3.html']; // Add more files as needed
+            // Fetch the HTML content
+            fetch(githubURL)
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
 
-            // Clear previous suggestions
-            suggestionList.innerHTML = '';
+                    // Get the table from the fetched HTML
+                    const table = doc.querySelector('.content-table');
 
-            // Iterate through each HTML file
-            htmlFiles.forEach(htmlFile => {
-                const githubURL = githubBaseURL + htmlFile;
+                    // Clear previous suggestions
+                    suggestionList.innerHTML = '';
 
-                // Fetch the HTML content
-                fetch(githubURL)
-                    .then(response => response.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
+                    // Iterate through each row in the table
+                    for (let i = 1; i < table.rows.length; i++) {
+                        const rowText = table.rows[i].textContent.toLowerCase();
 
-                        // Get the table from the fetched HTML
-                        const table = doc.querySelector('.content-table');
-
-                        // Iterate through each row in the table
-                        for (let i = 1; i < table.rows.length; i++) {
-                            const rowText = table.rows[i].textContent.toLowerCase();
-
-                            // Check if the input matches any part of the row text
-                            if (rowText.includes(input)) {
-                                const suggestionItem = document.createElement('li');
-                                suggestionItem.textContent = rowText;
-                                suggestionList.appendChild(suggestionItem);
-                            }
+                        // Check if the input matches any part of the row text
+                        if (rowText.includes(input)) {
+                            const suggestionItem = document.createElement('li');
+                            suggestionItem.textContent = rowText;
+                            suggestionList.appendChild(suggestionItem);
                         }
-                    })
-                    .catch(error => console.error(`Error fetching data from ${githubURL}:`, error));
-            });
-        }
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+       
+
 
 	function openURL(url) {
 	    window.open(url, '_blank');
